@@ -108,107 +108,113 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-6">
-      <div className="max-w-6xl mx-auto">
-        <header className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800">ABC Test Auto-Grader</h1>
-          <p className="text-gray-600 mt-2">Paste the key and students' answers. We'll handle formatting quirks like dots, parentheses, hyphens, spaces, and case.</p>
+    <div className="min-h-screen bg-[radial-gradient(1200px_600px_at_50%_-100px,rgba(60,130,246,0.08),transparent_60%),linear-gradient(to_bottom_right,#f6f7fb,#ffffff)] text-slate-900">
+      <div className="max-w-6xl mx-auto px-6 py-10">
+        <header className="mb-10">
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">ABC Test Auto‑Grader</h1>
+            <a href="/test" className="hidden md:inline-flex text-slate-700 hover:text-slate-900 text-sm underline-offset-4 hover:underline">Check backend</a>
+          </div>
+          <p className="mt-3 text-slate-600 text-base md:text-lg max-w-3xl">Paste the key and submissions. Formatting quirks like dots, parentheses, hyphens, spaces, and case are handled automatically.</p>
         </header>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-5 space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Answer Key</label>
-              <textarea
-                value={answerKey}
-                onChange={(e) => setAnswerKey(e.target.value)}
-                rows={10}
-                className="w-full border border-gray-200 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Example:\n1) A\n2) B\n3) C\n...\nOr compact: ABCABC"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Student Submissions</label>
-              <textarea
-                value={submissions}
-                onChange={(e) => setSubmissions(e.target.value)}
-                rows={10}
-                className="w-full border border-gray-200 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder={`Example:\nAlice\n1) a\n2) b\n3) c\n\nBob\n1a\n2b\n3c`}
-              />
-              <p className="text-xs text-gray-500 mt-2">Tip: First non-empty line in each block is the student name. Answers can be like "1a", "1. A", "1) a", "ABC...".</p>
-            </div>
-            {error && (
-              <div className="text-red-600 text-sm bg-red-50 border border-red-200 rounded p-2">{error}</div>
-            )}
-            <div className="flex items-center gap-3">
-              <button
-                type="submit"
-                disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-2 px-4 rounded"
-              >
-                {loading ? 'Grading…' : 'Grade Now'}
-              </button>
-              <button
-                type="button"
-                onClick={fillSample}
-                className="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded"
-              >
-                Fill Sample
-              </button>
-              <a href="/test" className="ml-auto text-blue-600 hover:underline">Check backend</a>
+        <div className="grid md:grid-cols-2 gap-8">
+          <form onSubmit={handleSubmit} className="relative overflow-hidden bg-white/70 backdrop-blur border border-slate-200 shadow-sm rounded-2xl p-6 transition">
+            <div className="absolute inset-0 pointer-events-none [mask-image:radial-gradient(40%_60%_at_50%_0%,black,transparent)] bg-gradient-to-b from-white/60 to-transparent" />
+            <div className="relative space-y-5">
+              <div>
+                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-slate-500 mb-2">Answer Key</label>
+                <textarea
+                  value={answerKey}
+                  onChange={(e) => setAnswerKey(e.target.value)}
+                  rows={10}
+                  className="w-full bg-white/70 backdrop-blur border border-slate-300/70 focus:border-slate-400 rounded-xl p-4 focus:outline-none focus:ring-0 text-slate-900 placeholder:text-slate-400"
+                  placeholder="Example:\n1) A\n2) B\n3) C\n...\nOr compact: ABCABC"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-slate-500 mb-2">Student Submissions</label>
+                <textarea
+                  value={submissions}
+                  onChange={(e) => setSubmissions(e.target.value)}
+                  rows={10}
+                  className="w-full bg-white/70 backdrop-blur border border-slate-300/70 focus:border-slate-400 rounded-xl p-4 focus:outline-none focus:ring-0 text-slate-900 placeholder:text-slate-400"
+                  placeholder={`Example:\nAlice\n1) a\n2) b\n3) c\n\nBob\n1a\n2b\n3c`}
+                />
+                <p className="text-xs text-slate-500 mt-2">First non‑empty line in each block is the student name. Answers can be like "1a", "1. A", "1) a", or compact "ABC…".</p>
+              </div>
+              {error && (
+                <div className="text-rose-700 text-sm bg-rose-50 border border-rose-200 rounded-xl p-3">{error}</div>
+              )}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="inline-flex items-center justify-center rounded-full px-5 py-2.5 bg-slate-900 text-white text-sm font-medium shadow-sm hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {loading ? 'Grading…' : 'Grade Now'}
+                </button>
+                <button
+                  type="button"
+                  onClick={fillSample}
+                  className="inline-flex items-center justify-center rounded-full px-5 py-2.5 bg-white text-slate-900 border border-slate-300 hover:border-slate-400 shadow-sm text-sm font-medium transition"
+                >
+                  Fill Sample
+                </button>
+                <a href="/test" className="md:hidden ml-auto text-slate-700 hover:text-slate-900 text-sm underline-offset-4 hover:underline">Check backend</a>
+              </div>
             </div>
           </form>
 
-          <div className="bg-white rounded-xl shadow p-5 overflow-auto">
+          <div className="bg-white/70 backdrop-blur border border-slate-200 shadow-sm rounded-2xl p-6 overflow-auto">
             {!result ? (
-              <div className="text-gray-500">
-                Results will appear here. After grading, you'll see per-student reports, ranking, and most-missed questions.
+              <div className="text-slate-500">
+                Results will appear here. After grading, you'll see per‑student reports, ranking, and most‑missed questions.
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-gray-800">Summary</h2>
-                  <button onClick={downloadReport} className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded text-sm">Download Report</button>
+                  <h2 className="text-xl md:text-2xl font-semibold tracking-tight">Summary</h2>
+                  <button onClick={downloadReport} className="inline-flex items-center rounded-full bg-slate-900 text-white px-4 py-2 text-sm font-medium hover:bg-black transition">Download Report</button>
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-gray-50 rounded p-3">
-                    <p className="text-sm text-gray-600">Total students</p>
-                    <p className="text-2xl font-bold">{result.summary.total_students}</p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <p className="text-xs uppercase tracking-wide text-slate-500 mb-1">Total students</p>
+                    <p className="text-3xl font-semibold">{result.summary.total_students}</p>
                   </div>
-                  <div className="bg-gray-50 rounded p-3">
-                    <p className="text-sm text-gray-600">Most missed</p>
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <p className="text-xs uppercase tracking-wide text-slate-500 mb-1">Most missed</p>
                     {result.summary.most_missed_questions?.length ? (
-                      <ul className="text-sm text-gray-800 list-disc ml-5">
+                      <ul className="text-sm text-slate-800 list-disc ml-5">
                         {result.summary.most_missed_questions.map((q) => (
                           <li key={q.question}>Q{q.question}: missed by {q.missed_by}</li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-sm text-gray-800">—</p>
+                      <p className="text-sm text-slate-800">—</p>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold mb-2">Ranking</h3>
-                  <div className="overflow-x-auto">
+                  <h3 className="font-semibold tracking-tight mb-3">Ranking</h3>
+                  <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
                     <table className="min-w-full text-sm">
-                      <thead>
-                        <tr className="text-left text-gray-600">
-                          <th className="py-2 pr-4">#</th>
-                          <th className="py-2 pr-4">Name</th>
-                          <th className="py-2 pr-4">Score</th>
-                          <th className="py-2 pr-4">%</th>
+                      <thead className="bg-slate-50/60">
+                        <tr className="text-left text-slate-600">
+                          <th className="py-2.5 pl-4 pr-4">#</th>
+                          <th className="py-2.5 pr-4">Name</th>
+                          <th className="py-2.5 pr-4">Score</th>
+                          <th className="py-2.5 pr-4">%</th>
                         </tr>
                       </thead>
                       <tbody>
                         {result.summary.ranking.map((r, idx) => (
-                          <tr key={r.name} className="border-t border-gray-100">
-                            <td className="py-2 pr-4">{idx + 1}</td>
-                            <td className="py-2 pr-4">{r.name}</td>
-                            <td className="py-2 pr-4">{r.raw_score}</td>
-                            <td className="py-2 pr-4">{r.percentage}%</td>
+                          <tr key={r.name} className="border-t border-slate-100">
+                            <td className="py-2.5 pl-4 pr-4">{idx + 1}</td>
+                            <td className="py-2.5 pr-4">{r.name}</td>
+                            <td className="py-2.5 pr-4">{r.raw_score}</td>
+                            <td className="py-2.5 pr-4">{r.percentage}%</td>
                           </tr>
                         ))}
                       </tbody>
@@ -216,38 +222,38 @@ function App() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  <h3 className="font-semibold">Per-student reports</h3>
+                <div className="space-y-5">
+                  <h3 className="font-semibold tracking-tight">Per‑student reports</h3>
                   {result.reports.map((r) => (
-                    <div key={r.name} className="border border-gray-200 rounded p-3">
+                    <div key={r.name} className="rounded-2xl border border-slate-200 bg-white shadow-sm p-4">
                       <div className="flex flex-wrap items-center gap-3 mb-2">
-                        <span className="text-lg font-semibold text-gray-800">{r.name}</span>
-                        <span className="text-sm text-gray-700">{r.raw_score}/{r.total_questions} ({r.percentage}%)</span>
-                        <span className="ml-auto text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">{r.suggested_grade}</span>
+                        <span className="text-lg font-semibold">{r.name}</span>
+                        <span className="text-sm text-slate-700">{r.raw_score}/{r.total_questions} ({r.percentage}%)</span>
+                        <span className="ml-auto text-xs rounded-full border border-slate-300 px-2 py-0.5 text-slate-700 bg-slate-50">{r.suggested_grade}</span>
                       </div>
                       {r.missed.length ? (
-                        <div className="overflow-x-auto">
+                        <div className="overflow-x-auto rounded-xl border border-slate-200">
                           <table className="min-w-full text-sm">
-                            <thead>
-                              <tr className="text-left text-gray-600">
-                                <th className="py-1 pr-4">Question</th>
-                                <th className="py-1 pr-4">Student</th>
-                                <th className="py-1 pr-4">Key</th>
+                            <thead className="bg-slate-50/60">
+                              <tr className="text-left text-slate-600">
+                                <th className="py-2 pl-3 pr-4">Question</th>
+                                <th className="py-2 pr-4">Student</th>
+                                <th className="py-2 pr-4">Key</th>
                               </tr>
                             </thead>
                             <tbody>
                               {r.missed.map((m) => (
-                                <tr key={m.question} className="border-t border-gray-100">
-                                  <td className="py-1 pr-4">{m.question}</td>
-                                  <td className="py-1 pr-4">{m.student_answer || '—'}</td>
-                                  <td className="py-1 pr-4">{m.correct_answer}</td>
+                                <tr key={m.question} className="border-t border-slate-100">
+                                  <td className="py-2 pl-3 pr-4">{m.question}</td>
+                                  <td className="py-2 pr-4">{m.student_answer || '—'}</td>
+                                  <td className="py-2 pr-4">{m.correct_answer}</td>
                                 </tr>
                               ))}
                             </tbody>
                           </table>
                         </div>
                       ) : (
-                        <p className="text-sm text-green-700">Perfect score. No misses.</p>
+                        <p className="text-sm text-emerald-700">Perfect score. No misses.</p>
                       )}
                     </div>
                   ))}
